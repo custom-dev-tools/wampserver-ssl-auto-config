@@ -72,15 +72,6 @@ rem Count the number of arguments.
 set $argumentCount=0
 for %%x in (%*) do Set /A $argumentCount+=1
 
-
-rem ----------------
-rem  Get CLI arg(s)
-rem ----------------
-
-rem Set the variables.
-set $configPath=
-set $restoreFlag=false
-
 rem Check if no arguments were given.
 if !$argumentCount! equ 0 (
     call :failure "CLI Argument Error" "ssl_conf.bat" "No ini file was given." "Please pass in the path to your config.ini file."
@@ -90,6 +81,15 @@ rem Check if more than two arguments were given.
 if !$argumentCount! gtr 2 (
     call :failure "CLI Argument Error" "ssl_conf.bat" "More than two arguments were given." "Please only pass in a maximum of 2 arguments, your ini file and the optional restore command."
 )
+
+
+rem ----------------
+rem  Get CLI arg(s)
+rem ----------------
+
+rem Set the variables.
+set $configPath=
+set $restoreFlag=false
 
 rem Check if two arguments were given.
 if !$argumentCount! equ 2 (
