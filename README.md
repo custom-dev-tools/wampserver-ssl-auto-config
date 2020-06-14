@@ -29,9 +29,9 @@ WampServer SSL Auto Config is a Microsoft Windows batch script designed to autom
 
 As the web moves towards 100% adaption of SSL, it makes sense that our development environment should match.
 
-Enabling and configuring SSL in WampServer can be a challenge. Knowledge of Apache and OpenSSL is required. The desire to work with multiple domains, each setup with its own unique self signed SSL certificate, its own unique document root (located in any directory on any drive you want) and its own unique set of log files requires a reliable and repeatable approach.
+Enabling and configuring SSL in WampServer can be a challenge. Knowledge of Apache and OpenSSL is required. The desire to work with multiple domains, each setup with its own unique self-signed SSL certificate, its own unique document root (located in any directory on any drive you want) and its own unique set of log files requires a reliable and repeatable approach.
  
-In only a couple of seconds, this batch script automatically creates all the necessary domain specific directories, certificates, log files and configuration files, which are then linked to each and every version of Apache you have installed on your system. In addition to this it also adds your SSL certificates to the Windows Trusted Root Certificate Store removing the need to constantly accept untrusted self signed certificates in the browser. Finally, it also tries to update your systems 'host' file for url friendly domain name addresses. All of this is achieved through the use of a simple, easy to understand `config.ini` file.
+In only a couple of seconds, this batch script automatically creates all the necessary domain specific directories, certificates, log files and configuration files, which are then linked to each and every version of Apache you have installed on your system. In addition to this it also adds your SSL certificates to the Windows Trusted Root Certificate Store removing the need to constantly accept untrusted self-signed certificates in the browser. Finally, it also tries to update your systems 'host' file for URL friendly domain name addresses. All of this is achieved through the use of a simple, easy to understand `config.ini` file.
  
 As a safety measure, running the script for the very first time will backup your systems 'host' file, and the primary configuration file of each and every version of Apache you have installed. Thus, if for any reason things don't go the way they should, a simple `restore` command can roll back WampServer to its prior state.
 
@@ -45,11 +45,11 @@ The following are required for the SSL Auto Config script to function correctly.
 * Use of Apache as a service.
 * Administrator rights.
 
-Administrator rights are required to update and roll back your systems 'host' file. Without Administrator rights this script will not be able to write to your systems 'host' file, preventing you from using url friendly domain name addresses. Whilst this does not stop the script from working, it definitely does prevent the use of this great feature. 
+Administrator rights are required to update and roll back your systems 'host' file. Without Administrator rights this script will not be able to write to your systems 'host' file, preventing you from using URL friendly domain name addresses. Whilst this does not stop the script from working, it definitely does prevent the use of this great feature. 
 
 ## Compatible Web Browsers
 
-Whilst any browser should work, browsers that use the Windows Trusted Root Certificate Store can take advantage of the trusted self signed certificates.
+Whilst any browser should work, browsers that use the Windows Trusted Root Certificate Store can take advantage of the trusted self-signed certificates.
 
 Such browsers are:
 
@@ -70,7 +70,7 @@ At just under 50kB the SSL Auto Config script is small enough to be saved anywhe
 
 Configuration is carried out by editing a simple, easy to understand config `.ini` file.
 
-Below is the contents of the `sample-config.ini` file.
+Below are the contents of the `sample-config.ini` file.
 
 ```
 ;--------------------------;
@@ -143,7 +143,7 @@ documentRoot=C:/wamp64 - domains/website-2/public_html
 
 * `sslEmail` : This value represents the email address of the organisation.
 
-  > **Note:** Use the 'local' part of an email address followed by the at (@) symbol only. Do not include the 'domain' part of the email address as the hostname will be auto-appended.
+  > **Note:** Use the 'local' part of an email address followed by the @ (at) symbol only. Do not include the 'domain' part of the email address as the hostname will be auto-appended.
 
 * `sslDays` : This value represents the number of days you would like the certificates to remain valid for. Enter a high value so your SSL certificate does not expire to regularly and become an inconvenience.
 
@@ -151,19 +151,19 @@ documentRoot=C:/wamp64 - domains/website-2/public_html
 
 * `[Website 1]` : This section name represent the human readable host name which is used within your various configuration files. Whilst it is not used by WampServer itself, it will definitely make identification within the generated configuration files easier.
 
-* `hostname` : This value represents the friendly url address used to access your site in your web browser.
+* `hostname` : This value represents the URL friendly address used to access your site in your web browser.
 
 * `documentRoot` : This value represents the (absolute) path to the public facing directory (commonly called the document root) of your website. This path does not need to be in the same directory or even on the same drive as WampServer. That said, it is not recommended to point this to a network drive.
 
 > **IMPORTANT:** Do not add quotation marks around your values, even if they contain spaces.
 
-Blank lines and commented lines starting with a semicolon (`;`) character are ignored. You may format and comment your configuration file any way you like.
+Blank lines and commented lines starting with a semicolon ( ; ) character are ignored. You may format and comment your configuration file any way you like.
 
-> Tip: You can copy and rename the `sample-config.ini` file to any directory on any drive you like. 
+> **Tip:** You can copy and rename the `sample-config.ini` file to any directory on any drive you like. 
 
 ## How To Use
 
-The SSL Auto Config script (`ssl_config.bat`) can perform two functions.
+The SSL Auto Config script can perform two functions.
 
 1. Configure each and every installed version of Apache to use SSL.
 2. Return each and every installed version of Apache back to its original state.
@@ -203,11 +203,11 @@ If at any stage you install a new version of Apache just run the script again to
 
 Should you find that your SSL certificate(s) expire then just run the script again. Doing so will generate new certificates and update then in the Windows Trusted Root Certificate store. If your certificate(s) seem to expire to quickly, just increase the value of `sslDays` in your `config.ini` file.
 
-> **IMPORTANT:** It is important to understand that the backup taken of each installed version of Apache's primary configuration file is a 'snap-shot' of their state at that particular point in time. Any changes you make to that version of Apache (such as enabling or disabling modules via the WampServer menu located in the notification area) will not be saved to the backed up version. Therefore, if you run the `restore` command, the 'backed up' version will overwrite any modified settings.   
+> **IMPORTANT:** It is important to understand that the backup taken of each installed version of Apache's primary configuration file is a 'snap-shot' of their state at that particular point in time. Any changes you make to that version of Apache (such as enabling or disabling modules via the WampServer menu located in the notification area) will not be saved to the backed-up version. Therefore, if you run the `restore` command, the 'backed-up' version will overwrite any modified settings.   
 
 #### The Created Folder Structure
 
-This script generates a preset folder structure base around the value of `wampServerExtensionsPath` in your `config.ini` file. 
+This script generates a pre-set folder structure base around the value of `wampServerExtensionsPath` in your `config.ini` file. 
 
 If you were to use the `sample-config.ini` file as your configuration file then the following command
 
@@ -301,11 +301,11 @@ Not all browsers use the Windows Trusted Root Certificate Store. For those that 
 
 By default, Firefox prefers to use its own internal certificate store. To enable its use of the Windows Trusted Root Certificate Store you must first enable this feature.
   
-To enable this feature follow the below steps:
+To enable this feature, follow the below steps:
 1. In the address bar type `about:config` and press the return key.
 2. If prompted, click the 'Accept the Risk and Continue' and 'Show All' buttons.
 3. In the 'Search preference name' field type `security.enterprise_roots.enabled` into the search field.
-4. If the flag is missing, select `boolean` as a value type and then click the add (+) button.
+4. If the flag is missing, select `boolean` as a value type and then click the add ( + ) button.
 5. If the flag exists and its value is `true` then Firefox is configured correctly.
 
 #### How To Configure Other Browsers

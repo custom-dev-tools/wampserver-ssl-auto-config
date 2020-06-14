@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.0.2] - 2020-06-15
+
+### Updated
+- Moved CLI argument count code (0 & >2) to a more logical section in ssl_config.bat
+- Fixed grammatical errors and general formatting in README.md
+
+### Changed
+- Updated version number.
+
 ## [1.0.1] - 2020-06-15
 
 ### Fixed
