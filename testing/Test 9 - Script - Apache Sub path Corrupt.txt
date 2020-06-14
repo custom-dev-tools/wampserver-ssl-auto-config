@@ -1,0 +1,9 @@
+// Test failure when WampServer Apache sub path is corrupt.
+
+File: ssl_config.bat
+Line: 14
+
+Step 1: Change value of key / value pair.
+Step 2: Run 'Test 15'
+Step 3: Confirm failure.
+Step 4: Undo change made in step 1.

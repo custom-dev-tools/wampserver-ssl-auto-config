@@ -1,0 +1,9 @@
+// Test failure when WampServer Apache configuration file contains an error.
+
+File: {WampServer Installation Path}\bin\apache\apacheX.X.XX\conf\httpd.conf
+Line: EOF (End Of File)
+
+Step 1: Add some random text to EOF.
+Step 2: Run 'Test 15'
+Step 3: Confirm failure.
+Step 4: Undo change made in step 1.

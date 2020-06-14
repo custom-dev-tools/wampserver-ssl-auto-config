@@ -1,0 +1,10 @@
+// Test failure when WampServer Apache service name can not be found.
+
+File:    {WampServer Installation Path}\wampmanager.conf
+Section: [service]
+Key:     ServiceApache
+
+Step 1: Change key of key / value pair.
+Step 2: Run 'Test 15'
+Step 3: Confirm failure.
+Step 4: Undo change made in step 1.
