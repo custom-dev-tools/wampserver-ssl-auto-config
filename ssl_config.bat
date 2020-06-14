@@ -7,7 +7,7 @@ rem     INITIALISATION
 rem -----------------------
 rem  Set default variables
 rem -----------------------
-set $scriptVersion=1.0.0
+set $scriptVersion=1.0.1
 set $scriptLogFileName=ssl_config.log
 
 rem WampServer sub-paths.
@@ -120,7 +120,7 @@ rem  Check CLI config arg has '.ini' extension
 rem -------------------------------------------
 
 rem Check if the file is an .ini file.
-call :isIniFile !$configPath!
+call :isIniFile "!$configPath!"
 
 rem Check the result.
 if /i "!$result!" equ "false" (
