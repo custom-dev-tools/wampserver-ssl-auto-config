@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.0.1] - 2020-06-15
+
+### Fixed
+- Added missing quotes around argument when calling isIniFile.
+
+### Changed
+- Updated version number.
+
 ## [1.0.0] - 2020-06-14
 
 ### Added
