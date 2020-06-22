@@ -278,8 +278,9 @@ $ start "C:\path\to\ssl_config.bat" "C:\path\to\config.ini" restore
 Running the script performs the following:
                     
 1. Parses the config file to get required data.
-2. Tries to restore the systems 'hosts' file (if a backup is found).
-3. Restores each and every installed version of Apache's primary configuration file (if a backup is found).
+2. Restores each and every installed version of Apache's primary configuration file (if a backup is found).
+3. Removes each and every config domain name from the Windows Trusted Root Certificate Store.
+4. Tries to restore the systems 'hosts' file (if a backup is found).
 
 > If your systems 'hosts' file was unable to be restored then see the section titled [Unable To Modify Your Systems 'Hosts' File](#unable-to-modify-your-systems-hosts-file).
 

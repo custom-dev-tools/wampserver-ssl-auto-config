@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+- Add config option for HTTP/2 per domain.
+
+## [1.1.0] - 2020-06-22
+
+### Added
+- Added removal of certificate(s) from Windows store upon 'restore' command.
+
 ## [1.0.2] - 2020-06-15
 
 ### Updated

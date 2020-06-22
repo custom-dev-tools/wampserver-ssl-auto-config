@@ -4,3 +4,4 @@
 # Personal use configuration files.
 personal-config.ini
 personal-ssl-config.bat
+personal-ssl-config-restore.bat
