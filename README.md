@@ -4,7 +4,7 @@
  
 [![GitHub License](https://img.shields.io/github/license/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=informational&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/custom-dev-tools/WampServer-SSL-Auto-Config.svg?logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/commits/master) [![GitHub open issues](https://img.shields.io/github/issues-raw/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=brightgreen&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/issues?q=is%3Aopen+is%3Aissue) [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=brightgreen&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/issues?q=is%3Aissue+is%3Aclosed)
 
-WampServer SSL Auto Config is a Microsoft Windows batch script designed to automatically generate and configure a fully working Apache SSL / Name Based virtual host development environment.
+WampServer SSL Auto Config is a Microsoft Windows batch script designed to automatically generate and configure a fully working Apache SSL / Name Based virtual host development environment with optional HTTP/2 functionality.
 
 ## Table of Contents
 
@@ -113,10 +113,12 @@ sslDays=3650
 [Website 1]
 hostname=www.dev.website-1.com.au
 documentRoot=C:/wamp64 - domains/website-1/public_html
+http2=true
 
 [Website 2]
 hostname=www.dev.website-2.com.au
 documentRoot=C:/wamp64 - domains/website-2/public_html
+http2=true
 ```
 
 #### WampServer Configuration
@@ -154,6 +156,8 @@ documentRoot=C:/wamp64 - domains/website-2/public_html
 * `hostname` : This value represents the URL friendly address used to access your site in your web browser.
 
 * `documentRoot` : This value represents the (absolute) path to the public facing directory (commonly called the document root) of your website. This path does not need to be in the same directory or even on the same drive as WampServer. That said, it is not recommended to point this to a network drive.
+
+* `http2` : This boolean value (`true` or `false`) represents the respective enabling or disabling of HTTP/2 functionality.
 
 > **IMPORTANT:** Do not add quotation marks around your values, even if they contain spaces.
 
