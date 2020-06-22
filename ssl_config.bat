@@ -7,7 +7,7 @@ rem     INITIALISATION
 rem -----------------------
 rem  Set default variables
 rem -----------------------
-set $scriptVersion=1.0.2
+set $scriptVersion=1.1.0
 set $scriptLogFileName=ssl_config.log
 
 rem WampServer sub-paths.
@@ -314,36 +314,6 @@ rem --------------------
 rem Check if the restore flag is set to true.
 if /i "!$restoreFlag!" equ "true" (
 
-    rem Set 'hosts' file updated flag.
-    set $osHostsFileUpdated=false
-
-    rem -------------------------
-    rem  Restore OS 'hosts' file
-    rem -------------------------
-
-    call :logToBoth "Attempting to restore OS 'hosts' file."
-
-    rem Check if the OS 'hosts-backup' file exists.
-    if exist "%$pathToOSHostsFile%-backup" (
-
-        rem Restore the OS 'hosts' file.
-        rem Unable to redirect error output without breaking updating of file...
-        type "!$pathToOSHostsFile!-backup" > "!$pathToOSHostsFile!" 2>nul
-
-        rem Check if the OS 'hosts' file matches the 'hosts-backup'file.
-        fc "!$pathToOSHostsFile!-backup" "!$pathToOSHostsFile!" >nul && (
-            set $osHostsFileUpdated=true
-            call :deleteFileIfExists "!$pathToOSHostsFile!-backup" 2>nul
-            call :logToBoth "Restored OS 'hosts' file."
-        ) || (
-            call :logToBoth "Unable to restore OS 'hosts' file."
-        )
-    ) else (
-        set $osHostsFileUpdated=true
-        call :logToBoth "OS 'hosts' backup file not found."
-    )
-
-
     rem ------------------------------
     rem  Loop through Apache versions
     rem ------------------------------
@@ -384,6 +354,56 @@ if /i "!$restoreFlag!" equ "true" (
         )
 
         call :logToBoth "  '!$installedApacheVersionsArray[%%a]!' validated."
+    )
+
+
+    rem ----------------------
+    rem  Loop through domains
+    rem ----------------------
+
+    call :logToBoth "Deleting certificates from store:"
+
+    rem Iterate through all config listed domains.
+    for /l %%a in (1,1,%$totalConfigDomains%) do (
+
+        rem -----------------------------------
+        rem  Delete cert(s) from Windows store
+        rem -----------------------------------
+
+        rem Delete certificate from 'trusted root certificate store'.
+        rem View store by entering 'certmgr.msc' at the command line.
+        certutil -delstore "root" "!$config[%%a][hostname]!" > nul
+        call :logToBoth "  '!$config[%%a][hostname]!'"
+    )
+
+
+    rem -------------------------
+    rem  Restore OS 'hosts' file
+    rem -------------------------
+
+    rem Set 'hosts' file updated flag.
+    set $osHostsFileUpdated=false
+
+    call :logToBoth "Attempting to restore OS 'hosts' file."
+
+    rem Check if the OS 'hosts-backup' file exists.
+    if exist "%$pathToOSHostsFile%-backup" (
+
+        rem Restore the OS 'hosts' file.
+        rem Unable to redirect error output without breaking updating of file...
+        type "!$pathToOSHostsFile!-backup" > "!$pathToOSHostsFile!" 2>nul
+
+        rem Check if the OS 'hosts' file matches the 'hosts-backup'file.
+        fc "!$pathToOSHostsFile!-backup" "!$pathToOSHostsFile!" >nul && (
+            set $osHostsFileUpdated=true
+            call :deleteFileIfExists "!$pathToOSHostsFile!-backup" 2>nul
+            call :logToBoth "Restored OS 'hosts' file."
+        ) || (
+            call :logToBoth "Unable to restore OS 'hosts' file."
+        )
+    ) else (
+        set $osHostsFileUpdated=true
+        call :logToBoth "OS 'hosts' backup file not found."
     )
 
     rem ----------------
