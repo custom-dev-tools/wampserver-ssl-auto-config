@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 - Add config option for HTTP/2 per domain.
 
+## [1.1.1] - 2020-08-25
+
+### Fixed
+- Added .gitattributes file to normalize EOL's for Windows OS when code is downloaded as ZIP file.
+
+### Changed
+- Updated version number.
+
 ## [1.1.0] - 2020-06-22
 
 ### Added
