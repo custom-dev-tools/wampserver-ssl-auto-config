@@ -738,7 +738,7 @@ for /l %%a in (1,1,%$totalApacheVersionsInstalled%) do (
 
 
     rem --------------------------------------------
-    rem  Uncomment 'socache_shmcb_modules' module
+    rem  Uncomment 'socache_shmcb_module' module
     rem
     rem  Low level shared memory based object cache
     rem  for caching information such as SSL
@@ -757,13 +757,14 @@ for /l %%a in (1,1,%$totalApacheVersionsInstalled%) do (
     )
 
 
-    rem -----------------------------------------
-    rem  Uncomment 'ssl_module_modules' module
+    rem -------------------------------
+    rem  Uncomment 'ssl_module' module
     rem
-    rem  This module used the socache interface
-    rem  to provide a session cache and stapling
+    rem  This module used the socache
+    rem  interface to provide a
+    rem  session cache and stapling
     rem  cache.
-    rem -----------------------------------------
+    rem -------------------------------
 
     rem Check if the module is commented out / disabled.
     call :findInFile "]#LoadModule ssl_module modules/mod_ssl.so" "!$installedApacheVersionPathsArray[%%a]!\conf\httpd.conf"
@@ -774,6 +775,30 @@ for /l %%a in (1,1,%$totalApacheVersionsInstalled%) do (
     ) else (
         rem Module already uncommented / enabled.
         call :logToBoth "    'ssl_module' already uncommented."
+    )
+
+    rem -----------------------------------------
+    rem  Uncomment 'http2_module' module
+    rem
+    rem  This module enables HTTP/2 support.
+    rem
+    rem  OpenSSL version must be greater than or
+    rem  equal to 1.0.2 for HTTP/2 compatibility.
+    rem
+    rem  OpenSSL cipher suite must be greater
+    rem  than or equal to TLS 1.3 for HTTP/2
+    rem  compatibility.
+    rem -----------------------------------------
+
+    rem Check if the module is commented out / disabled.
+    call :findInFile "]#LoadModule http2_module modules/mod_http2.so" "!$installedApacheVersionPathsArray[%%a]!\conf\httpd.conf"
+    if /i "!$result!" equ "true" (
+        rem Uncomment / enable the module.
+        call :findAndReplaceInFile "]#LoadModule http2_module modules/mod_http2.so" "]LoadModule http2_module modules/mod_http2.so" "!$installedApacheVersionPathsArray[%%a]!\conf\httpd.conf"
+        call :logToBoth "    'http2_module' uncommented."
+    ) else (
+        rem Module already uncommented / enabled.
+        call :logToBoth "    'http2_module' already uncommented."
     )
 
 
