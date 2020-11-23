@@ -293,8 +293,9 @@ If Apache fails to restart following the `restore` command then you will need to
 1. In each and every version of Apache you have installed:
     1. Delete the file `C:\wamp64\bin\apache\apacheX.X.XX\conf\httpd.conf`.
     2. Rename the file `C:\wamp64\bin\apache\apacheX.X.XX\conf\httpd-backup.conf` to `httpd.conf`.
-2. Delete the file `%systemroot%\System32\drivers\etc\hosts`.
-3. Rename the file `%systemroot%\System32\drivers\etc\hosts-backup` to `host`.
+2. In the directory containing your system 'hosts' file:
+    1. Delete the file `%systemroot%\System32\drivers\etc\hosts`.
+    2. Rename the file `%systemroot%\System32\drivers\etc\hosts-backup` to `host`.
 
 > **Note:** You will need Administrator rights to perform the above 'hosts' file action.
  
