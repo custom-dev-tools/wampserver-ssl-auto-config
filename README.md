@@ -64,7 +64,7 @@ For browsers that do not use the Windows Trusted Root Certificate Store (such as
 
 No installation is required.
 
-At just under 50kB the SSL Auto Config script is small enough to be saved anywhere in your file system.
+At 51kB the SSL Auto Config script is small enough to be saved anywhere in your file system.
 
 ## Configuration
 
@@ -158,6 +158,8 @@ http2=true
 * `documentRoot` : This value represents the (absolute) path to the public facing directory (commonly called the document root) of your website. This path does not need to be in the same directory or even on the same drive as WampServer. That said, it is not recommended to point this to a network drive.
 
 * `http2` : This boolean value (`true` or `false`) represents the respective enabling or disabling of HTTP/2 functionality.
+
+  > **Note:** You may need to clear (or disable) your browser cache when toggling between HTTP/1.1 and HTTP/2.
 
 > **IMPORTANT:** Do not add quotation marks around your values, even if they contain spaces.
 
