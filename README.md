@@ -4,7 +4,7 @@
  
 [![GitHub License](https://img.shields.io/github/license/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=informational&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/custom-dev-tools/WampServer-SSL-Auto-Config.svg?logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/commits/master) [![GitHub open issues](https://img.shields.io/github/issues-raw/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=brightgreen&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/issues?q=is%3Aopen+is%3Aissue) [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/custom-dev-tools/WampServer-SSL-Auto-Config.svg?color=brightgreen&logo=github)](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config/issues?q=is%3Aissue+is%3Aclosed)
 
-WampServer SSL Auto Config is a Microsoft Windows batch script designed to automatically generate and configure a fully working Apache SSL / Name Based virtual host development environment.
+WampServer SSL Auto Config is a Microsoft Windows batch script designed to automatically generate and configure a fully working Apache SSL / Name Based virtual host development environment with optional HTTP/2 functionality.
 
 ## Table of Contents
 
@@ -64,7 +64,7 @@ For browsers that do not use the Windows Trusted Root Certificate Store (such as
 
 No installation is required.
 
-At just under 50kB the SSL Auto Config script is small enough to be saved anywhere in your file system.
+At 51kB the SSL Auto Config script is small enough to be saved anywhere in your file system.
 
 ## Configuration
 
@@ -113,10 +113,12 @@ sslDays=3650
 [Website 1]
 hostname=www.dev.website-1.com.au
 documentRoot=C:/wamp64 - domains/website-1/public_html
+http2=true
 
 [Website 2]
 hostname=www.dev.website-2.com.au
 documentRoot=C:/wamp64 - domains/website-2/public_html
+http2=true
 ```
 
 #### WampServer Configuration
@@ -135,7 +137,7 @@ documentRoot=C:/wamp64 - domains/website-2/public_html
 
 * `sslState` : This value represents the full name of a state.
 
-* `sslCountry` : This value represents the two letter ISO code of a country.
+* `sslCountry` : This value represents the two-letter ISO code of a country.
 
 * `sslOrganisation` : This value represents an organisation name.
 
@@ -145,15 +147,19 @@ documentRoot=C:/wamp64 - domains/website-2/public_html
 
   > **Note:** Use the 'local' part of an email address followed by the @ (at) symbol only. Do not include the 'domain' part of the email address as the hostname will be auto-appended.
 
-* `sslDays` : This value represents the number of days you would like the certificates to remain valid for. Enter a high value so your SSL certificate does not expire to regularly and become an inconvenience.
+* `sslDays` : This value represents the number of days you would like the certificates to remain valid for. Enter a high value, so your SSL certificate does not expire to regularly and become an inconvenience.
 
 #### Development Domains
 
-* `[Website 1]` : This section name represent the human readable host name which is used within your various configuration files. Whilst it is not used by WampServer itself, it will definitely make identification within the generated configuration files easier.
+* `[Website 1]` : This section name represent the human-readable host name which is used within your various configuration files. Whilst it is not used by WampServer itself, it will definitely make identification within the generated configuration files easier.
 
 * `hostname` : This value represents the URL friendly address used to access your site in your web browser.
 
 * `documentRoot` : This value represents the (absolute) path to the public facing directory (commonly called the document root) of your website. This path does not need to be in the same directory or even on the same drive as WampServer. That said, it is not recommended to point this to a network drive.
+
+* `http2` : This boolean value (`true` or `false`) represents the respective enabling or disabling of HTTP/2 functionality.
+
+  > **Note:** You may need to clear (or disable) your browser cache when toggling between HTTP/1.1 and HTTP/2.
 
 > **IMPORTANT:** Do not add quotation marks around your values, even if they contain spaces.
 
@@ -289,8 +295,9 @@ If Apache fails to restart following the `restore` command then you will need to
 1. In each and every version of Apache you have installed:
     1. Delete the file `C:\wamp64\bin\apache\apacheX.X.XX\conf\httpd.conf`.
     2. Rename the file `C:\wamp64\bin\apache\apacheX.X.XX\conf\httpd-backup.conf` to `httpd.conf`.
-2. Delete the file `%systemroot%\System32\drivers\etc\hosts`.
-3. Rename the file `%systemroot%\System32\drivers\etc\hosts-backup` to `host`.
+2. In the directory containing your system 'hosts' file:
+    1. Delete the file `%systemroot%\System32\drivers\etc\hosts`.
+    2. Rename the file `%systemroot%\System32\drivers\etc\hosts-backup` to `host`.
 
 > **Note:** You will need Administrator rights to perform the above 'hosts' file action.
  
@@ -318,4 +325,4 @@ If you know of any other browser(s) that would benefit by being added to this li
 If you are unable to update or restore your systems 'hosts' file then:
 
 1. You are not logged in as an Administrator. To change this either login as an Administrator or right click the script and select 'Run as administrator'.
-2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.   
+2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software, and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.   
