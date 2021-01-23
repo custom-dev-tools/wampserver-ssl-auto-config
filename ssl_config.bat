@@ -580,6 +580,7 @@ for /l %%a in (1,1,%$totalConfigDomains%) do (
     set $config[name]=!$config[%%a][name]!
     set $config[hostname]=!$config[%%a][hostname]!
     set $config[documentRoot]=!$config[%%a][documentRoot]!
+    set $config[http2]=!$config[%%a][http2]!
 
     rem Show domain name.
     call :logToBoth "---------------------------------------------"
@@ -637,11 +638,19 @@ for /l %%a in (1,1,%$totalConfigDomains%) do (
     rem  (Re)Create HTTPS vhost file
     rem -----------------------------
     if not exist "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf" (
-        (call :apache24HttpsVhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        if /i "!$config[http2]!" equ "false" (
+            (call :apache24Https11VhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        ) else (
+            (call :apache24Https2VhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        )
         call :logToBoth "  Created Virtual Host https file."
     ) else (
         call :deleteFileIfExists "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
-        (call :apache24HttpsVhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        if /i "!$config[http2]!" equ "false" (
+            (call :apache24Https11VhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        ) else (
+            (call :apache24Https2VhostConfigFile) >> "!$config[wampServerExtensionsPath]!\vhosts\https\!$config[hostname]!.conf"
+        )
         call :logToBoth "  Re-created Virtual Host https file."
     )
 
@@ -777,10 +786,14 @@ for /l %%a in (1,1,%$totalApacheVersionsInstalled%) do (
         call :logToBoth "    'ssl_module' already uncommented."
     )
 
+
     rem -----------------------------------------
     rem  Uncomment 'http2_module' module
     rem
     rem  This module enables HTTP/2 support.
+    rem
+    rem  HTTP/2 functionality set per development
+    rem  domain.
     rem
     rem  OpenSSL version must be greater than or
     rem  equal to 1.0.2 for HTTP/2 compatibility.
@@ -1296,10 +1309,10 @@ echo ^</VirtualHost^>
 exit /B
 
 
-rem -----------------------------------------------------------
-rem  The vhosts 'httpd-ssl.conf' configuration (template) file
-rem -----------------------------------------------------------
-:apache24HttpsVhostConfigFile
+rem ---------------------------------------------------------------------------
+rem  The vhosts 'httpd-ssl.conf' configuration (template) file (with HTTP/1.1)
+rem ---------------------------------------------------------------------------
+:apache24Https11VhostConfigFile
 
 echo # Virtual Host - https://!$config[hostname]!
 echo #
@@ -1331,6 +1344,50 @@ echo     ErrorLog "!$config[wampServerExtensionsPath]!/logs/!$config[hostname]!/
 echo:
 echo     LogFormat "%%L [%%{%%a, %%d-%%b-%%g %%T}t %%{%%z}t] %%H %%{SSL_PROTOCOL}x %%{SSL_CIPHER}x %%m \"%%U%%q\" (%%b bytes) %%>s" ssl
 echo     CustomLog "!$config[wampServerExtensionsPath]!/logs/!$config[hostname]!/ssl_request.log" ssl
+echo:
+echo ^</VirtualHost^>
+
+exit /B
+
+
+rem -------------------------------------------------------------------------
+rem  The vhosts 'httpd-ssl.conf' configuration (template) file (with HTTP/2)
+rem -------------------------------------------------------------------------
+:apache24Https2VhostConfigFile
+
+echo # Virtual Host - https://!$config[hostname]!
+echo #
+echo ^<VirtualHost *:443^>
+echo:
+echo     ServerName !$config[hostname]!
+echo     ServerAlias !$config[hostname]!
+echo     ServerAdmin admin@%!$config[hostname]!
+echo     DocumentRoot "!$config[documentRoot]!"
+echo:
+echo     ^<Directory "!$config[documentRoot]!/"^>
+echo         SSLOptions +StdEnvVars
+echo         Options +Indexes +Includes +FollowSymLinks +MultiViews
+echo         AllowOverride All
+echo         Require local
+echo         Require ip !$ipNetworkPart!
+echo     ^</Directory^>
+echo:
+echo     SSLEngine on
+echo:
+echo     SSLCertificateFile "!$config[wampServerExtensionsPath]!/certs/!$config[hostname]!/server.crt"
+echo     SSLCertificateKeyFile "!$config[wampServerExtensionsPath]!/certs/!$config[hostname]!/private.key"
+echo:
+echo     LogFormat "%%L [%%{%%a, %%d-%%b-%%g %%T}t %%{%%z}t] %%H %%m \"%%U%%q\" (%%b bytes) %%>s" access
+echo     CustomLog "!$config[wampServerExtensionsPath]!/logs/!$config[hostname]!/access.log" access
+echo:
+echo     ErrorLogFormat "%%L [%%t] [%%-m:%%l] [pid %%P:tid %%T] %%E: %%a %%M"
+echo     ErrorLog "!$config[wampServerExtensionsPath]!/logs/!$config[hostname]!/error.log"
+echo:
+echo     LogFormat "%%L [%%{%%a, %%d-%%b-%%g %%T}t %%{%%z}t] %%H %%{SSL_PROTOCOL}x %%{SSL_CIPHER}x %%m \"%%U%%q\" (%%b bytes) %%>s" ssl
+echo     CustomLog "!$config[wampServerExtensionsPath]!/logs/!$config[hostname]!/ssl_request.log" ssl
+echo:
+echo     SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+echo     Protocols h2 http/1.1
 echo:
 echo ^</VirtualHost^>
 
