@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-- Add config option for HTTP/2 per domain.
+## [1.2.0] - 2021-01-24
+
+- Added option to enable HTTP/2 functionality per development domain.
 
 ## [1.1.1] - 2020-08-25
 
