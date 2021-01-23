@@ -137,7 +137,7 @@ http2=true
 
 * `sslState` : This value represents the full name of a state.
 
-* `sslCountry` : This value represents the two letter ISO code of a country.
+* `sslCountry` : This value represents the two-letter ISO code of a country.
 
 * `sslOrganisation` : This value represents an organisation name.
 
@@ -147,11 +147,11 @@ http2=true
 
   > **Note:** Use the 'local' part of an email address followed by the @ (at) symbol only. Do not include the 'domain' part of the email address as the hostname will be auto-appended.
 
-* `sslDays` : This value represents the number of days you would like the certificates to remain valid for. Enter a high value so your SSL certificate does not expire to regularly and become an inconvenience.
+* `sslDays` : This value represents the number of days you would like the certificates to remain valid for. Enter a high value, so your SSL certificate does not expire to regularly and become an inconvenience.
 
 #### Development Domains
 
-* `[Website 1]` : This section name represent the human readable host name which is used within your various configuration files. Whilst it is not used by WampServer itself, it will definitely make identification within the generated configuration files easier.
+* `[Website 1]` : This section name represent the human-readable host name which is used within your various configuration files. Whilst it is not used by WampServer itself, it will definitely make identification within the generated configuration files easier.
 
 * `hostname` : This value represents the URL friendly address used to access your site in your web browser.
 
@@ -325,4 +325,4 @@ If you know of any other browser(s) that would benefit by being added to this li
 If you are unable to update or restore your systems 'hosts' file then:
 
 1. You are not logged in as an Administrator. To change this either login as an Administrator or right click the script and select 'Run as administrator'.
-2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.   
+2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software, and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.   
