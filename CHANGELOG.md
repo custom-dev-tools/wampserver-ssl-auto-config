@@ -6,8 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.2.1] - 2021-03-11
+
+### Added
+- Issues template.
+
+### Updated
+- Updated README.md reflecting minimum Apache version number required for HTTP/2 functionality.
+
 ## [1.2.0] - 2021-01-24
 
+### Added
 - Added option to enable HTTP/2 functionality per development domain.
 
 ## [1.1.1] - 2020-08-25

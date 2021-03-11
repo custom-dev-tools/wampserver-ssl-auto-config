@@ -24,6 +24,7 @@ WampServer SSL Auto Config is a Microsoft Windows batch script designed to autom
   * [How To Configure Firefox](#how-to-configure-firefox)
   * [How To Configure Other Browsers](#how-to-configure-other-browsers)
 * [Unable To Modify Your Systems 'Hosts' File](#unable-to-modify-your-systems-hosts-file)
+* [Epilogue](#epilogue)
 
 ## Introduction
 
@@ -42,6 +43,7 @@ The following are required for the SSL Auto Config script to function correctly.
 * Microsoft Windows 7 and up.
 * WampServer v3.0.0 and up.
 * Use of Apache 2.4 and up.
+  * Use of Apache 2.4.17 and up when using HTTP/2.
 * Use of Apache as a service.
 * Administrator rights.
 
@@ -72,7 +74,7 @@ Configuration is carried out by editing a simple, easy to understand config `.in
 
 Below are the contents of the `sample-config.ini` file.
 
-```
+````ini
 ;--------------------------;
 ; WampServer Configuration ;
 ;--------------------------;
@@ -119,7 +121,7 @@ http2=true
 hostname=www.dev.website-2.com.au
 documentRoot=C:/wamp64 - domains/website-2/public_html
 http2=true
-```
+````
 
 #### WampServer Configuration
 
@@ -159,7 +161,9 @@ http2=true
 
 * `http2` : This boolean value (`true` or `false`) represents the respective enabling or disabling of HTTP/2 functionality.
 
-  > **Note:** You may need to clear (or disable) your browser cache when toggling between HTTP/1.1 and HTTP/2.
+  > **Note 1:** HTTP/2 is only available from Apache 2.4.17 and later.
+  >
+  > **Note 2:** You may need to clear (or disable) your browser cache when toggling between HTTP/1.1 and HTTP/2.
 
 > **IMPORTANT:** Do not add quotation marks around your values, even if they contain spaces.
 
@@ -178,15 +182,15 @@ The SSL Auto Config script can perform two functions.
 
 To run the script from a CMD prompt:
 
-```
+````shell
 C:\>: "C:\path\to\ssl_config.bat" "C:\path\to\my\config.ini"
-```
+````
 
-To run the script from a Bash or Powershell prompt:
+To run the script from a Bash or PowerShell prompt:
 
-```
+````shell
 $ start "C:\path\to\ssl_config.bat" "C:\path\to\config.ini"
-```
+````
 
 > **Note:** Don't forget to enclose paths in quotes if they contain spaces.
 
@@ -217,42 +221,42 @@ This script generates a pre-set folder structure base around the value of `wampS
 
 If you were to use the `sample-config.ini` file as your configuration file then the following command
 
-```
+````shell
 C:\>: "C:\path\to\ssl_config.bat" "C:\path\to\sample-config.ini"
-```
+````
 
 would generate the below folder structure.
 
 ```
 C:\wamp64 - ssl auto config
-    + certs
-    |  + www.dev.website-1.com.au
-    |  |  + openssl.cnf
-    |  |  + private.key
-    |  |  + server.crt
-    |  + www.dev.website-2.com.au
-    |  |  + openssl.cnf
-    |  |  + private.key
-    |  |  + server.crt
-    + logs
-    |  + www.dev.website-1.com.au
-    |  |  + access.log
-    |  |  + error.log
-    |  |  + ssl_request.log
-    |  + www.dev.website-2.com.au
-    |  |  + access.log
-    |  |  + error.log
-    |  |  + ssl_request.log
-    |  + ssl_config.log
-    + vhosts
-       + http
-       |  + www.dev.website-1.com.au.conf
-       |  + www.dev.website-2.com.au.conf
-       + https
-          + conf
-          |  + httpd-ssl.conf
-          + www.dev.website-1.com.au.conf
-          + www.dev.website-2.com.au.conf
+    ├─ certs
+    │   ├─ www.dev.website-1.com.au
+    │   │   ├─ openssl.cnf
+    │   │   ├─ private.key
+    │   │   └─ server.crt
+    │   └─ www.dev.website-2.com.au
+    │       ├─ openssl.cnf
+    │       ├─ private.key
+    │       └─ server.crt
+    ├─ logs
+    │   ├─ www.dev.website-1.com.au
+    │   │   ├─ access.log
+    │   │   ├─ error.log
+    │   │   └─ ssl_request.log
+    │   ├─ www.dev.website-2.com.au
+    │   │   ├─ access.log
+    │   │   ├─ error.log
+    │   │   └─ ssl_request.log
+    │   └─ ssl_config.log
+    └─ vhosts
+        ├─ http
+        │   ├─ www.dev.website-1.com.au.conf
+        │   └─ www.dev.website-2.com.au.conf
+        └─ https
+            ├─ conf
+            │   └─ httpd-ssl.conf
+            ├─ www.dev.website-1.com.au.conf
+            └─ www.dev.website-2.com.au.conf
 ```
 
 This folder structure will remain the same, even after multiple runs **unless** you change the value of `wampServerExtensionsPath` in your `config.ini` file.
@@ -269,15 +273,15 @@ The folder(s) you keep your website(s) code in is not touched at all by this scr
 
 To run the script from a CMD prompt:
 
-```
+````shell
 C:\>: "C:\path\to\ssl_config.bat" "C:\path\to\my\config.ini" restore
-```
+````
 
-To run the script from a Bash or Powershell prompt:
+To run the script from a Bash or PowerShell prompt:
 
-```
+````shell
 $ start "C:\path\to\ssl_config.bat" "C:\path\to\config.ini" restore
-```
+````
 
 > **Note:** Don't forget to enclose paths in quotes if they contain spaces.
 
@@ -325,4 +329,8 @@ If you know of any other browser(s) that would benefit by being added to this li
 If you are unable to update or restore your systems 'hosts' file then:
 
 1. You are not logged in as an Administrator. To change this either login as an Administrator or right click the script and select 'Run as administrator'.
-2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software, and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.   
+2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software, and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.
+
+## Epilogue
+
+Further enhancement of the script was to include configuration per Development Domain of gzip (mod_deflate) and brotli (mod_brotli) compression but due to WampServers excellent ability to switching Apache versions on the fly, this very mechanism makes it close to impossible to efficiently implement using just a Microsoft Windows batch script. To implement what appears to be a simple enhancement would require the use of 'project' configuration files, which then leads to the idea of automatically re-configuring the state of your local WAMP server when switching between these 'project' configurations files. :astonished: :bulb: This gives me a configurable by code, git committable idea...! 
