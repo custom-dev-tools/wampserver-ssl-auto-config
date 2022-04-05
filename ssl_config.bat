@@ -7,7 +7,7 @@ rem     INITIALISATION
 rem -----------------------
 rem  Set default variables
 rem -----------------------
-set $scriptVersion=1.2.1
+set $scriptVersion=1.2.2
 set $scriptLogFileName=ssl_config.log
 
 rem WampServer sub-paths.
@@ -266,11 +266,13 @@ for /f "delims=" %%a in ('dir %$config[wampServerInstallPath]%\%$subPathToApache
     rem  Get version path
     rem ------------------
 
-    set /A $totalApacheVersionsInstalled=$totalApacheVersionsInstalled+1
-    rem Set the Apache version folder path to the array.
-    set $installedApacheVersionsArray[!$totalApacheVersionsInstalled!]=%%a
-    set $installedApacheVersionPathsArray[!$totalApacheVersionsInstalled!]=%$config[wampServerInstallPath]%\%$subPathToApacheFolders%\%%a
-    call :logToBoth "  '%%a'"
+    if "%%a" neq "modules_sup" (
+        set /A $totalApacheVersionsInstalled=$totalApacheVersionsInstalled+1
+        rem Set the Apache version folder path to the array.
+        set $installedApacheVersionsArray[!$totalApacheVersionsInstalled!]=%%a
+        set $installedApacheVersionPathsArray[!$totalApacheVersionsInstalled!]=%$config[wampServerInstallPath]%\%$subPathToApacheFolders%\%%a
+        call :logToBoth "  '%%a'"
+    )
 )
 
 
