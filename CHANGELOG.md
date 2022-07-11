@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.2.3] - 2022-07-11
+
+### Updated
+- Updated explanation of wampServerExtensionsPath in configuration file and README.md
+
 ## [1.2.2] - 2022-04-05
 
 ### Fixed

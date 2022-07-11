@@ -24,17 +24,16 @@ WampServer SSL Auto Config is a Microsoft Windows batch script designed to autom
   * [How To Configure Firefox](#how-to-configure-firefox)
   * [How To Configure Other Browsers](#how-to-configure-other-browsers)
 * [Unable To Modify Your Systems 'Hosts' File](#unable-to-modify-your-systems-hosts-file)
-* [Epilogue](#epilogue)
 
 ## Introduction
 
 As the web moves towards 100% adaption of SSL, it makes sense that our development environment should match.
 
-Enabling and configuring SSL in WampServer can be a challenge. Knowledge of Apache and OpenSSL is required. The desire to work with multiple domains, each setup with its own unique self-signed SSL certificate, its own unique document root (located in any directory on any drive you want) and its own unique set of log files requires a reliable and repeatable approach.
+Setting up SSL in WampServer can be a challenge. Knowledge of Apache and OpenSSL is required. The desire to work with multiple domains, each setup with its own unique self-signed SSL certificate, its own unique document root (located in any directory on any drive you want) and its own unique set of log files requires a reliable and repeatable approach.
  
 In only a couple of seconds, this batch script automatically creates all the necessary domain specific directories, certificates, log files and configuration files, which are then linked to each and every version of Apache you have installed on your system. In addition to this it also adds your SSL certificates to the Windows Trusted Root Certificate Store removing the need to constantly accept untrusted self-signed certificates in the browser. Finally, it also tries to update your systems 'host' file for URL friendly domain name addresses. All of this is achieved through the use of a simple, easy to understand `config.ini` file.
  
-As a safety measure, running the script for the very first time will backup your systems 'host' file, and the primary configuration file of each and every version of Apache you have installed. Thus, if for any reason things don't go the way they should, a simple `restore` command can roll back WampServer to its prior state.
+As a safety measure, running the script for the very first time will back up your systems 'host' file, and the primary configuration file of each and every version of Apache you have installed. Thus, if for any reason things don't go the way they should, a simple `restore` command can roll back WampServer to its prior state.
 
 ## Minimum Requirements
 
@@ -82,7 +81,8 @@ Below are the contents of the `sample-config.ini` file.
 ; Your WampServer installation path.
 wampServerInstallPath=C:\wamp64
 
-; The parent path where your SSL certificates, keys, vhost and log files will be stored.
+; Your custom path to store your SSL certificates, keys, logs and vhost files.
+; Ensure this path is NOT within your WampServer installation path.
 wampServerExtensionsPath=C:\wamp64 - ssl auto config
 
 ;-------------------------;
@@ -131,7 +131,7 @@ http2=true
   > * `C:\wamp` - For 32-bit installations.
   > * `C:\wamp64` - For 64-bit installations.
 
-* `wampServerExtensionsPath` : This value represents the (absolute) parent path that will hold all the certificates, keys, log and vhost files used by WampServer. This path will be created if it does not already exist. Additionally, this path does not need to be in the same directory or even on the same drive as WampServer. That said, it is not recommended to point this to a network drive.
+* `wampServerExtensionsPath` : This value represents your (absolute) custom path that will hold all the certificates, keys, log and vhost files used by WampServer. This path will be created if it does not already exist. This path should NOT be within the WampServer installation path. Whilst it can be in any other path on the same or different drive, it is not recommended to point this to a network drive.
 
 #### SSL Certificate Details
   
@@ -209,11 +209,11 @@ Running the script performs the following:
 
 Once the script has run, any open web browsers will need to be refreshed for the changes to take effect.
 
-If at any stage you install a new version of Apache just run the script again to allow its primary configuration file to be linked and SSL enabled as well.
+If at any stage you install a new version of Apache just run the script again to allow its primary configuration file to be linked and SSL enabled.
 
-Should you find that your SSL certificate(s) expire then just run the script again. Doing so will generate new certificates and update then in the Windows Trusted Root Certificate store. If your certificate(s) seem to expire to quickly, just increase the value of `sslDays` in your `config.ini` file.
+If you find your SSL certificate(s) expired then just run the script again. Doing so will generate new certificates and update then in the Windows Trusted Root Certificate store. If your certificate(s) seem to expire to quickly, just increase the value of `sslDays` in your `config.ini` file.
 
-> **IMPORTANT:** It is important to understand that the backup taken of each installed version of Apache's primary configuration file is a 'snap-shot' of their state at that particular point in time. Any changes you make to that version of Apache (such as enabling or disabling modules via the WampServer menu located in the notification area) will not be saved to the backed-up version. Therefore, if you run the `restore` command, the 'backed-up' version will overwrite any modified settings.   
+> **IMPORTANT:** It is important to understand that the backup taken of each installed version of Apache's primary configuration file is a 'snapshot' of their state at that particular point in time. Any changes you make to that version of Apache (such as enabling or disabling modules via the WampServer menu located in the notification area) will not be saved to the backed-up version. Therefore, if you run the `restore` command, the 'backed-up' version will overwrite any modified settings.   
 
 #### The Created Folder Structure
 
@@ -263,7 +263,7 @@ This folder structure will remain the same, even after multiple runs **unless** 
 
 Adding a development domain to your `config.ini` file will add it to this folder structure.
 
-Removing a development domain from your `config.ini` file will not remove it from this folder structure. You must remove the folder manually if you no longer want it.
+Removing a development domain from your `config.ini` file will not remove it from this folder structure. You must remove the specific folder and files manually if you no longer want them.
 
 The folder(s) you keep your website(s) code in is not touched at all by this script.
 
@@ -328,9 +328,5 @@ If you know of any other browser(s) that would benefit by being added to this li
 
 If you are unable to update or restore your systems 'hosts' file then:
 
-1. You are not logged in as an Administrator. To change this either login as an Administrator or right click the script and select 'Run as administrator'.
-2. Your anti-virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of anti-virus software, and the most probable cause of this issue. To change this turn off / disable your anti-virus software, run the script and then turn on / enable your anti-virus software. Most anti-virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.
-
-## Epilogue
-
-Further enhancement of the script was to include configuration per Development Domain of gzip (mod_deflate) and brotli (mod_brotli) compression but due to WampServers excellent ability to switching Apache versions on the fly, this very mechanism makes it close to impossible to efficiently implement using just a Microsoft Windows batch script. To implement what appears to be a simple enhancement would require the use of 'project' configuration files, which then leads to the idea of automatically re-configuring the state of your local WAMP server when switching between these 'project' configurations files. :astonished: :bulb: This gives me a configurable by code, git committable idea...! 
+1. You are not logged in as an Administrator. To change this either login as an Administrator or right-click the script and select 'Run as administrator'.
+2. Your Anti-Virus software is stopping the modification of your systems files, including your systems 'hosts' file. This is usually a standard function of Anti-Virus software, and the most probable cause of this issue. To change this turn off / disable your Anti-Virus software, run the script and then turn on / enable your Anti-Virus software. Most Anti-Virus software has an easily accessible option to disable protection for a short period of time. EG: 1-minute, 3-minutes, etc. You should only need to disable it for 1-minute for the script to execute correctly.

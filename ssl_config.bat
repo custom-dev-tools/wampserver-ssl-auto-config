@@ -7,7 +7,7 @@ rem     INITIALISATION
 rem -----------------------
 rem  Set default variables
 rem -----------------------
-set $scriptVersion=1.2.2
+set $scriptVersion=1.2.3
 set $scriptLogFileName=ssl_config.log
 
 rem WampServer sub-paths.
