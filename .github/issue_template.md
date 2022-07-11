@@ -8,7 +8,7 @@ Please describe the issue you are having.
 
    > Default location is: `C:\wamp64 - ssl auto config\logs\ssl_config.log`
    > 
-   > Custom base directory location is set on line 9 of your config.ini file. 
+   > Custom base directory location is set on line 10 of your config.ini file. 
 
 2. Attach the `ssl_config.log` file to this issue.
 
